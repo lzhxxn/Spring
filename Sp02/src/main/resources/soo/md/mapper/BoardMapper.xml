@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="soo.md.mapper.BoardMapper">
+	
+	<!-- //파라미터 int가 두개라 하나의 클래스를 만들어서 넘겨준다. -->
+	<select id="selectPerPage" resultType="Board" parameterType="BoardVo" >
+	<![CDATA[ 
+	select * from (select ROWNUM rnum, aa.* from (select * from BOARD order by GRP desc, CSEQ asc) aa) 
+	  where rnum>#{startRow} and rnum<=#{endRow}
+	]]>
+	</select>
+	
+	<select id="selectByCatgo" resultType="Board" parameterType="BoardVo" >
+	<![CDATA[ 
+	select * from (select ROWNUM rnum, aa.* 
+	from (select * from BOARD where ${catgo} like '%'||#{keyword}||'%' order by ${catgo}) aa) 
+	  where rnum>#{startRow} and rnum<=#{endRow}
+	]]>
+	</select>	
+ <!-- 	$ {} 하면 값으로인정하지않고, ''가없어서 테이블이나 컬러몀을 쓰면 된다.  --> <!--   #{}쓰면 값으로 인정해서 String catgo = "김치"하면 '김치'로 넘어온다. -->
+ 
+		<select id="selectCount" resultType="long">
+			select count(SEQ) from BOARD
+		</select>
+	
+	<select id="selectCountByCatgo" resultType="long" parameterType="BoardVo">
+		select count(SEQ) from BOARD where ${catgo} like '%'||#{keyword}||'%'
+	</select>
+	
+	
+	<!-- <select id="list" resultType="Board"> 
+ 		 select * from BOARD order by SEQ desc
+	</select> -->
+	
+	 <insert id="insert" parameterType="Board">
+ 	 	insert into BOARD values(BOARD_SEQ.nextval, BOARD_GRP.nextval, 0, 0, #{writer}, #{email}, #{subject}, #{content}, SYSDATE, #{fname}, #{ofname}, #{fsize})  <!--  #{} 이 것을 써주면 dto.getName을 할 필요가없다. -->
+ 	 </insert>
+ 	 
+ 	 	 <insert id="insert_re" parameterType="Board">
+ 	 	insert into BOARD values(BOARD_SEQ.nextval, #{grp}, 1, 1, #{writer}, #{email}, #{subject}, #{content}, SYSDATE, #{fname}, #{ofname}, #{fsize})  <!--  #{} 이 것을 써주면 dto.getName을 할 필요가없다. -->
+ 	 </insert>
+ 	 
+ 	 <select id="selectBySeq" parameterType="long" resultType="Board">
+ 	 	select * from BOARD where SEQ=#{seq}
+ 	 </select>
+
+ 	 <delete id="delete" parameterType="long">
+ 	 	delete from BOARD where SEQ=#{seq}   <!-- long타입이들어와서 seq값으로 들어간다. -->
+ 	 </delete>
+ 	 
+ 	 <select id="update1" parameterType="long" resultType="Board">
+ 	 	select * from BOARD where SEQ=#{seq}
+ 	 </select>
+ 	 
+ 	 <update id="update2" parameterType="Board">
+ 	 	update BOARD set WRITER=#{writer}, EMAIL=#{email}, SUBJECT=#{subject}, CONTENT=#{content}, FNAME=#{fname}, OFNAME=#{ofname}, FSIZE=#{fsize} where SEQ=#{seq}   <!--  #{} 이 것을 써주면 dto.getName을 할 필요가없다. -->
+ 	 </update>
+ 	 
+</mapper>
+
+<!-- <DAO>라생각하면된다 -->
+<!-- <DAO>라생각하면된다 -->
+<!-- <DAO>라생각하면된다 -->
+<!-- <DAO>라생각하면된다 -->
+<!-- <DAO>라생각하면된다 -->
+<!-- <DAO>라생각하면된다 -->
+<!-- <DAO>라생각하면된다 -->
+<!-- <DAO>라생각하면된다 -->
+<!-- <DAO>라생각하면된다 -->
+<!-- <DAO>라생각하면된다 -->
+<!-- 1. 일치가되어야한다.
+2. 자동생성 -->
+<!--  xml을 갱신하면 서버를 리스타트 해줘야 한다. -->
