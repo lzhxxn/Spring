@@ -1,0 +1,51 @@
+< Client 에서 Server 로 JSON 전달 방법 >
+
+(1) pom.xml  ( 확인해 보고 없으면 추가! ) 
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-databind</artifactId>
+	    <version>2.9.3</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.codehaus.jackson</groupId>
+	    <artifactId>jackson-mapper-asl</artifactId>
+	    <version>1.9.13</version>
+	</dependency>
+    
+(2) html 
+	#Client - JSON -> Server
+	<input id="na">
+	<input id="ad">
+	<input type="button" value="주소록 추가" id="insertObj"/><br/><br/>
+
+(3) js 
+      $("#insertObj").on("click", function(){
+	   //var obj = new Object();
+	   //obj.name = $("#na").val();
+	   //obj.addr = $("#ad").val();
+	   
+	   var obj = {name:$("#na").val(), addr:$("#ad").val()};
+	   var jsonData = JSON.stringify(obj); //jsObj -> json 
+	   alert("jsonData: " + jsonData);
+	   
+	   $.ajax({
+		   url: "../ajax03/insertObj.json", 
+		   type: "POST",
+		   contentType: "application/json",
+		   data: jsonData, 
+		   success: function(responseData){
+			   alert("responseData.name: " + responseData.name);
+		   }
+	   });
+      });
+
+
+(4) Controller 
+	@ResponseBody
+	@PostMapping("insertObj") 
+	public Address insertObj(@RequestBody Address json) {
+		log.info("#AjaxT03Controller insertObj() json: " + json);
+		service.insertS(json);
+
+		return json; 
+	}

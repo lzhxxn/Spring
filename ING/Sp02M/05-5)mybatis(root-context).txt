@@ -1,0 +1,2 @@
+﻿<context:component-scan base-package="soo.md.mapper"/>
+	<mybatis-spring:scan base-package="soo.md.mapper"/>

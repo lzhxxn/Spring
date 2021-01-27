@@ -1,0 +1,3 @@
+﻿<context:annotation-config></context:annotation-config>
+<context:component-scan base-package="soo.md.aop"/>
+<aop:aspectj-autoproxy></aop:aspectj-autoproxy>

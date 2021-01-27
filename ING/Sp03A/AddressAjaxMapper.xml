@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="soo.md.mapper.AddressAjaxMapper">
+ 
+	<select id="list" resultType="Address">
+		select * from ADDRESS order by NAME
+	</select>
+
+	<insert id="insert" parameterType="Address">
+	    insert into ADDRESS values(ADDRESS_SEQ.nextval, #{name}, #{addr}, SYSDATE)  
+	</insert>
+
+	<delete id="delete" parameterType="long">
+	  	delete from ADDRESS where SEQ=#{seq}
+	</delete>
+
+    <!-- for Ajax -->
+    <select id="selectBySeq" resultType="Address" parameterType="long">
+        select * from ADDRESS where SEQ=#{seq}
+    </select>
+    <select id="selectByName" resultType="Address" parameterType="String">
+        select * from ADDRESS where NAME like '%'||#{name}||'%' order by NAME
+    </select>
+</mapper>

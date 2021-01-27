@@ -1,0 +1,55 @@
+﻿1. URL 
+  (1) DTO 
+      https://okky.kr/article/211064
+
+  (2) MyBatis 
+	1) 1:1 
+	https://ssssssu12.tistory.com/4
+
+	
+	2) 1:N 
+	https://gubok.tistory.com/400
+
+	https://ssodang.tistory.com/entry/MyBatis-%EB%91%90%ED%85%8C%EC%9D%B4%EB%B8%94-%EC%A0%95%EB%B3%B4%EB%A5%BC-%ED%95%9C%EA%B0%9C%EC%9D%98-%EB%AA%A8%EB%8D%B8%EB%A1%9C-Join-%EC%BF%BC%EB%A6%AC%EB%A1%9C-%EB%B0%9B%EA%B8%B0
+
+  (3) 종합 API 
+      https://mybatis.org/mybatis-3/ko/sqlmap-xml.html
+
+
+2. 쏘스 예제 ( 검증 안됨 ) 
+public class Blog{
+    private String id;
+    private String title;
+
+    private List<Post> posts;
+}
+public class Post {
+    private String id;
+    private String subject;
+    private String body;
+}
+
+<resultMap id="blogResult" type="Blog">
+  <id property="id" column="blog_id" />
+  <result property="title" column="blog_title"/>
+  <collection property="posts" ofType="Post" resultMap="blogPostResult" columnPrefix="post_"/>
+</resultMap>
+
+<resultMap id="blogPostResult" type="Post">
+  <id property="id" column="id"/>
+  <result property="subject" column="subject"/>
+  <result property="body" column="body"/>
+</resultMap>
+
+<select id="selectBlog" resultMap="blogResult">
+  select
+  B.id as blog_id,
+  B.title as blog_title,
+  B.author_id as blog_author_id,
+  P.id as post_id,
+  P.subject as post_subject,
+  P.body as post_body,
+  from Blog B
+  left outer join Post P on B.id = P.blog_id
+  where B.id = #{id}
+</select>

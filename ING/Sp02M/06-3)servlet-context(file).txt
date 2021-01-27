@@ -1,0 +1,5 @@
+<!-- 파일 다운로드 -->
+	<beans:bean id="fileDownloadView" class="soo.md.filesetting.FileDownloadView" />
+	<beans:bean id="fileViewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
+	    <beans:property name="order" value="0" />
+	</beans:bean>
