@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="soo.md.mapper.AddressMapper1">
+	<select id="list" resultType="Address">   <!-- Address가 갖고있는 list를 리턴한다. -->
+ 		 select * from ADDRESS order by SEQ desc
+	</select>
+	
+	 <insert
+ 	 id="insert" parameterType="Address">
+ 	 	insert into ADDRESS values(ADDRESS_SEQ.nextval, #{name}, #{addr}, SYSDATE)   <!--  #{} 이 것을 써주면 dto.getName을 할 필요가없다. -->
+ 	 </insert>
+ 	 
+ 	 <delete id="delete" parameterType="long">
+ 	 	delete from ADDRESS where SEQ=#{seq}   <!-- long타입이들어와서 seq값으로 들어간다. -->
+ 	 </delete>
+ 	 
+</mapper>
+
+

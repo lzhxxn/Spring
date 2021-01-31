@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+   <typeAliases>
+   	   <typeAlias alias="Address" type="soo.md.domain.Address"/>
+   	   <typeAlias alias="Board" type="soo.md.domain.Board"/>
+   	   <typeAlias alias="BoardVo" type="soo.md.domain.BoardVo"/>
+   	   <!-- <typeAlias alias="BoardListResult" type="soo.md.domain.BoardListResult"/> -->
+   </typeAliases>
+    
+<!--    <mappers>
+   	   <mapper resource="soo/md/mapper/AddressMapper1.xml"/>
+   	   <mapper resource="soo/md/mapper/AddressMapper2.xml"/>
+   	   <mapper resource="soo/md/mapper/BoardMapper.xml"/>
+   </mappers>
+    -->
+</configuration>
+
